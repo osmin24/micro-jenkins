@@ -1,0 +1,39 @@
+services : 
+  module-app :
+    container_name : module-app
+    image :  module-app:v1
+    build : 
+      context : .
+    ports :  
+      - "402"
+    networks : 
+      module-web:
+
+  module-app-2 :
+    container_name : module-app-2
+    image :  module-app:v1
+    ports :  
+      - "402"
+    networks : 
+      module-web:
+
+  module-app-3 :
+    container_name : module-app-3
+    image :  module-app:v1
+    ports :  
+      - "402"
+    networks : 
+      module-web:
+      
+  balanceador :
+    container_name : balanceador
+    image :  balanceador:0.1
+    build : 
+      context : ./balanceador
+    ports :  
+      - "403:80"
+    networks : 
+      module-web:
+    
+networks :
+  module-web:
