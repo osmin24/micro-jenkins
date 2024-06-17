@@ -1,0 +1,38 @@
+pepilene{
+    agent any
+
+    stages{
+        stage('Clona el repositorio  de git'){
+            steps{
+                git branch: 'main', url: 'https://github.com/osmin24/micro-jenkins.git'
+            }
+        }
+        stage('Cotruye una imagen de docker'){
+            steps{
+                 script {
+                    withCredentials([
+                        string(credentialsId: '', variable: '')
+                    ]) {
+                        docker.build('', '--build-arg MONGO_URI=${MONGO_URI} .')
+                    }
+            }
+        }
+        stage('Despliega el container'){
+            steps{
+                 script {
+                    withCredentials([
+                            string(credentialsId: 'MONGO_URI', variable: 'MONGO_URI')
+                    ]) {
+                        sh 'docker-compose up -d'
+                    }
+                }
+            }
+        }
+    }
+    post{
+        always{
+            
+        }
+
+    }
+}

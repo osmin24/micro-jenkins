@@ -8,6 +8,7 @@ services :
       - "402"
     networks : 
       module-web:
+    enveriment
 
   module-app-2 :
     container_name : module-app-2
